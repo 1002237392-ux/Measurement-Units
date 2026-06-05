@@ -1,0 +1,630 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Tajawal',sans-serif;background:linear-gradient(135deg,#0d1b3e,#1a3a8f 50%,#2e7dd1);min-height:100vh;direction:rtl;color:#1a1a2e;padding-bottom:80px}
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Cairo:wght@600;700;800;900&display=swap');
+
+/* ── SCREENS ── */
+.screen{display:none;animation:fadeIn .4s ease}
+.screen.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── HERO ── */
+.hero{background:linear-gradient(135deg,#0a1628,#1a2d5a 50%,#0d3b6e);padding:32px 20px 24px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(46,125,209,.2),transparent 60%),radial-gradient(ellipse at 80% 30%,rgba(245,166,35,.12),transparent 50%);pointer-events:none}
+.hero h1{font-family:'Cairo',sans-serif;font-size:clamp(1.5rem,4vw,2.2rem);font-weight:900;color:#fff;position:relative;z-index:1}
+.hero h1 span{color:#f5a623}
+.hero p{color:#aac4e8;font-size:.92rem;margin-top:6px;position:relative;z-index:1}
+
+/* ── LOGIN ── */
+.login-wrap{max-width:460px;margin:32px auto;padding:0 16px}
+.login-card{background:#fff;border-radius:22px;padding:32px 28px;box-shadow:0 16px 48px rgba(0,0,0,.25)}
+.login-card h2{font-family:'Cairo',sans-serif;font-size:1.3rem;font-weight:900;color:#0d1b3e;margin-bottom:22px;text-align:center}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:.82rem;font-weight:700;color:#1a3a8f;margin-bottom:6px}
+.field input{width:100%;border:2px solid #dde8f8;border-radius:10px;padding:11px 14px;font-family:'Tajawal',sans-serif;font-size:.95rem;outline:none;transition:border-color .3s;direction:rtl}
+.field input:focus{border-color:#2e7dd1}
+.btn-primary{width:100%;background:linear-gradient(135deg,#1a3a8f,#2e7dd1);color:#fff;border:none;border-radius:12px;padding:13px;font-family:'Cairo',sans-serif;font-size:1rem;font-weight:800;cursor:pointer;transition:all .3s;margin-top:4px}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,58,143,.4)}
+.btn-secondary{width:100%;background:transparent;color:#1a3a8f;border:2px solid #1a3a8f;border-radius:12px;padding:11px;font-family:'Cairo',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;margin-top:10px;transition:all .3s}
+.btn-secondary:hover{background:#f0f6ff}
+.divider{text-align:center;color:#aaa;font-size:.82rem;margin:16px 0;position:relative}
+.divider::before,.divider::after{content:'';position:absolute;top:50%;width:38%;height:1px;background:#e0e0e0}
+.divider::before{right:0}.divider::after{left:0}
+
+/* ── TABS ── */
+.tabs{display:flex;max-width:720px;margin:22px auto 0;padding:0 16px;gap:0}
+.tab{flex:1;padding:12px 6px;border:none;font-family:'Cairo',sans-serif;font-size:.95rem;font-weight:800;cursor:pointer;transition:all .3s;color:rgba(255,255,255,.6);background:rgba(255,255,255,.08)}
+.tab:first-child{border-radius:12px 0 0 12px}
+.tab:last-child{border-radius:0 12px 12px 0}
+.tab.active{color:#0d1b3e;background:rgba(255,255,255,.95)}
+.tab:hover:not(.active){background:rgba(255,255,255,.15);color:#fff}
+
+.content{max-width:720px;margin:18px auto 0;padding:0 16px;display:none}
+.content.active{display:block}
+
+/* ── CARD ── */
+.card{background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 10px 36px rgba(0,0,0,.18);margin-bottom:18px}
+.card-header{padding:16px 20px;display:flex;align-items:center;gap:10px}
+.card-header h3{font-family:'Cairo',sans-serif;font-weight:800;font-size:1rem;color:#fff}
+
+/* ── STAIR VISUAL ── */
+.stair-visual{padding:16px 20px 8px;background:linear-gradient(135deg,#f0f6ff,#e8f0ff)}
+.stair-step{border-radius:10px 0 0 0;padding:9px 14px;margin-bottom:2px;font-family:'Cairo',sans-serif;font-weight:800;font-size:.88rem;display:flex;justify-content:space-between;align-items:center}
+.stair-note{font-size:.78rem;color:#888;padding:8px 14px 12px;font-style:italic}
+
+/* ── EXERCISES ── */
+.ex-wrap{padding:16px 20px 20px}
+.ex-row{background:#f4f8ff;border-radius:12px;padding:12px 14px;margin-bottom:10px;border:2px solid #e0ecff;transition:border-color .3s}
+.ex-row:hover{border-color:#2e7dd1}
+.ex-q{font-weight:700;font-size:.9rem;color:#1a1a2e;margin-bottom:8px}
+.ex-inputs{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.ex-input{width:95px;border:2px solid #b0c8f0;border-radius:8px;padding:7px 10px;font-family:'Tajawal',sans-serif;font-size:.9rem;outline:none;text-align:center;direction:ltr;background:#fff;transition:border-color .3s}
+.ex-input:focus{border-color:#2e7dd1}
+.unit-tag{font-size:.82rem;font-weight:700;color:#3a4a6b}
+.check-btn{background:linear-gradient(135deg,#1a3a8f,#2e7dd1);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-family:'Tajawal',sans-serif;font-size:.82rem;font-weight:700;cursor:pointer;transition:all .2s}
+.check-btn:hover{transform:scale(1.05)}
+.ex-result{font-size:.82rem;font-weight:700;margin-top:6px;padding:6px 10px;border-radius:8px;display:none}
+.ex-result.ok{background:#e8f8f0;color:#1a7a4a;display:block}
+.ex-result.no{background:#fff0f0;color:#c0392b;display:block}
+
+/* ── RULE BOX ── */
+.rule-box{background:#fffbf0;border:2px solid #f5a623;border-radius:12px;padding:12px 16px;margin:0 20px 14px;font-size:.86rem;line-height:2;color:#5a4a00}
+.rule-box strong{color:#c0580a}
+
+/* ── CALC ── */
+.calc-wrap{padding:16px 20px 20px}
+.calc-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.calc-input{width:100px;border:2px solid #b0c8f0;border-radius:10px;padding:9px 12px;font-family:'Tajawal',sans-serif;font-size:.95rem;outline:none;text-align:center;direction:ltr;background:#fff}
+.calc-input:focus{border-color:#2e7dd1}
+.calc-select{border:2px solid #b0c8f0;border-radius:10px;padding:9px 10px;font-family:'Tajawal',sans-serif;font-size:.85rem;outline:none;background:#fff;cursor:pointer}
+.calc-select:focus{border-color:#2e7dd1}
+.arr{font-size:1.3rem;color:#2e7dd1;font-weight:900}
+.calc-res{background:linear-gradient(135deg,#e8f3ff,#f0f8ff);border:2px solid #2e7dd1;border-radius:12px;padding:14px 18px;margin-top:10px;text-align:center;display:none}
+.calc-res-num{font-family:'Cairo',sans-serif;font-size:1.8rem;font-weight:900;color:#1a3a8f}
+.calc-res-unit{font-size:.95rem;color:#2e7dd1;font-weight:700;margin-right:4px}
+.calc-steps{margin-top:8px;font-size:.82rem;color:#3a4a6b;line-height:2;background:#fff;border-radius:8px;padding:8px 12px;text-align:right}
+
+/* ── SCORE STRIP ── */
+.score-strip{position:fixed;bottom:0;left:0;right:0;background:linear-gradient(135deg,#0a1628,#1a3a8f);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 -4px 20px rgba(0,0,0,.3);z-index:100}
+.sc-badge{background:#f5a623;color:#0a1628;font-family:'Cairo',sans-serif;font-weight:900;font-size:.95rem;border-radius:50%;width:40px;height:40px;display:flex;align-items:center;justify-content:center}
+.sc-bar-wrap{width:120px;height:7px;background:rgba(255,255,255,.2);border-radius:4px;overflow:hidden;margin-top:3px}
+.sc-bar{height:100%;background:linear-gradient(90deg,#f5a623,#fcd958);border-radius:4px;transition:width .5s;width:0}
+
+/* ── NOTIF ── */
+.notif{position:fixed;top:18px;left:50%;transform:translateX(-50%);background:#1a3a8f;color:#fff;padding:10px 22px;border-radius:20px;font-family:'Cairo',sans-serif;font-weight:700;font-size:.88rem;box-shadow:0 6px 24px rgba(0,0,0,.3);z-index:300;opacity:0;transition:opacity .35s;pointer-events:none;white-space:nowrap}
+.notif.show{opacity:1}
+
+/* ── DASHBOARD ── */
+.dash-wrap{max-width:720px;margin:20px auto;padding:0 16px}
+.dash-header{background:linear-gradient(135deg,#0a1628,#1a2d5a);border-radius:20px;padding:20px 24px;color:#fff;display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:12px}
+.dash-header h2{font-family:'Cairo',sans-serif;font-size:1.1rem;font-weight:900}
+.btn-sm{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:8px;padding:7px 14px;font-family:'Tajawal',sans-serif;font-size:.82rem;font-weight:700;cursor:pointer;transition:all .2s}
+.btn-sm:hover{background:rgba(255,255,255,.25)}
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
+.stat-box{background:#fff;border-radius:14px;padding:16px;text-align:center;box-shadow:0 4px 16px rgba(0,0,0,.1)}
+.stat-num{font-family:'Cairo',sans-serif;font-size:1.6rem;font-weight:900;color:#1a3a8f}
+.stat-label{font-size:.78rem;color:#888;margin-top:2px}
+.students-table{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 6px 24px rgba(0,0,0,.12)}
+.tbl{width:100%;border-collapse:collapse;font-size:.88rem}
+.tbl thead th{background:linear-gradient(135deg,#0d1b3e,#1a3a8f);color:#fff;padding:12px 14px;font-family:'Cairo',sans-serif;font-weight:700;text-align:center;font-size:.82rem}
+.tbl tbody tr:nth-child(even){background:#f8fbff}
+.tbl tbody tr:hover{background:#e8f3ff}
+.tbl td{padding:11px 14px;border-bottom:1px solid #edf3ff;text-align:center;color:#1a1a2e}
+.rank-badge{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;font-weight:900;font-size:.82rem;color:#fff}
+.rank-1{background:linear-gradient(135deg,#f5a623,#fcd958);color:#0a1628}
+.rank-2{background:#b0b8c8;color:#fff}
+.rank-3{background:#cd7f32;color:#fff}
+.rank-n{background:#e0ecff;color:#1a3a8f}
+.score-pill{display:inline-block;background:linear-gradient(135deg,#1a3a8f,#2e7dd1);color:#fff;border-radius:20px;padding:3px 12px;font-weight:700;font-size:.82rem}
+.weak-tag{background:#fff0f0;color:#c0392b;border-radius:8px;padding:2px 8px;font-size:.75rem;font-weight:700;margin:1px}
+.strong-tag{background:#e8f8f0;color:#1a7a4a;border-radius:8px;padding:2px 8px;font-size:.75rem;font-weight:700;margin:1px}
+.filter-row{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.filter-row select{border:2px solid #b0c8f0;border-radius:10px;padding:8px 12px;font-family:'Tajawal',sans-serif;font-size:.85rem;outline:none;background:#fff;cursor:pointer}
+.no-data{text-align:center;padding:40px;color:#888;font-size:.9rem}
+</style>
+
+<!-- ══════════ SCREEN: WELCOME ══════════ -->
+<div id="screen-welcome" class="screen active">
+  <div class="hero">
+    <h1>📏 تحويل <span>وحدات القياس</span></h1>
+    <p>الطول ● الكتلة ● الحجم</p>
+  </div>
+  <div class="login-wrap">
+    <div class="login-card">
+      <h2>مرحباً! من أنت؟</h2>
+      <div class="field">
+        <label>اكتب اسمك الكامل</label>
+        <input id="student-name" type="text" placeholder="مثال: أحمد محمد" onkeydown="if(event.key==='Enter')startStudent()">
+      </div>
+      <button class="btn-primary" onclick="startStudent()">ابدأ التدريب →</button>
+      <div class="divider">أو</div>
+      <button class="btn-secondary" onclick="showTeacherLogin()">دخول المعلمة 🔐</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ SCREEN: TEACHER LOGIN ══════════ -->
+<div id="screen-teacher-login" class="screen">
+  <div class="hero">
+    <h1>🔐 دخول <span>المعلمة</span></h1>
+    <p>لوحة متابعة الطلاب</p>
+  </div>
+  <div class="login-wrap">
+    <div class="login-card">
+      <h2>كلمة سر المعلمة</h2>
+      <div class="field">
+        <label>كلمة السر</label>
+        <input id="teacher-pass" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')checkTeacherPass()">
+      </div>
+      <button class="btn-primary" onclick="checkTeacherPass()">دخول</button>
+      <button class="btn-secondary" onclick="showScreen('screen-welcome')">← رجوع</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ SCREEN: STUDENT ══════════ -->
+<div id="screen-student" class="screen">
+  <div class="hero">
+    <h1>📏 تحويل <span>وحدات القياس</span></h1>
+    <p id="student-greeting"></p>
+  </div>
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab('length')">📏 الطول</div>
+    <div class="tab" onclick="switchTab('mass')">⚖️ الكتلة</div>
+    <div class="tab" onclick="switchTab('volume')">🧪 الحجم</div>
+  </div>
+
+  <!-- LENGTH -->
+  <div id="tab-length" class="content active">
+    <div class="card">
+      <div class="card-header" style="background:linear-gradient(135deg,#1db8aa,#2e7dd1)"><h3>🪜 درج وحدات الطول</h3></div>
+      <div class="stair-visual" id="stair-len"></div>
+      <div class="stair-note">↘ من كبير → صغير: اضرب | ↗ من صغير → كبير: اقسم</div>
+    </div>
+    <div class="card">
+      <div class="card-header" style="background:linear-gradient(135deg,#1a3a8f,#2e7dd1)"><h3>🧮 الحاسبة الذكية</h3></div>
+      <div class="calc-wrap">
+        <div class="calc-row">
+          <input class="calc-input" type="number" id="lv" placeholder="القيمة" oninput="calcLen()">
+          <select class="calc-select" id="lf" onchange="calcLen()"><option value="km">كم</option><option value="m" selected>متر</option><option value="dm">دسم</option><option value="cm">سم</option><option value="mm">مم</option></select>
+          <span class="arr">⇐</span>
+          <select class="calc-select" id="lt" onchange="calcLen()"><option value="km">كم</option><option value="m">متر</option><option value="dm">دسم</option><option value="cm" selected>سم</option><option value="mm">مم</option></select>
+        </div>
+        <div class="calc-res" id="len-res"><span class="calc-res-num" id="lr-n"></span><span class="calc-res-unit" id="lr-u"></span><div class="calc-steps" id="lr-s"></div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header" style="background:linear-gradient(135deg,#27ae60,#1abc9c)"><h3>✏️ تمارين الطول (عشوائية)</h3></div>
+      <div class="rule-box"><strong>العلاقات:</strong> 1كم=1000م | 1م=100سم | 1سم=10مم</div>
+      <div class="ex-wrap" id="ex-len"></div>
+    </div>
+  </div>
+
+  <!-- MASS -->
+  <div id="tab-mass" class="content">
+    <div class="card">
+      <div class="card-header" style="background:linear-gradient(135deg,#e8a020,#f5c842);"><h3 style="color:#0a1628">🪜 درج وحدات الكتلة</h3></div>
+      <div class="stair-visual" id="stair-mass" style="background:linear-gradient(135deg,#fffbf0,#fff8e7)"></div>
+      <div class="stair-note">العامل دائماً 1000 بين كل وحدتين متجاورتين</div>
+    </div>
+    <div class="card">
+      <div class="card-header" style="background:linear-gradient(135deg,#1a3a8f,#2e7dd1)"><h3>🧮 الحاسبة الذكية</h3></div>
+      <div class="calc-wrap">
+        <div class="calc-row">
+          <input class="calc-input" type="number" id="mv" placeholder="القيمة" oninput="calcMass()">
+          <select class="calc-select" id="mf" onchange="calcMass()"><option value="ton">طن</option><option value="kg" selected>كغ</option><option value="g">غ</option><option value="mg">ملغ</option></select>
+          <span class="arr">⇐</span>
+          <select class="calc-select" id="mt" onchange="calcMass()"><option value="ton">طن</option><option value="kg">كغ</option><option value="g" selected>غ</option><option value="mg">ملغ</option></select>
+        </div>
+        <div class="calc-res" id="mass-res"><span class="calc-res-num" id="mr-n"></span><span class="calc-res-unit" id="mr-u"></span><div class="calc-steps" id="mr-s"></div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header" style="background:linear-gradient(135deg,#8e44ad,#9b59b6)"><h3>✏️ تمارين الكتلة (عشوائية)</h3></div>
+      <div class="rule-box"><strong>العلاقات:</strong> 1طن=1000كغ | 1كغ=1000غ | 1غ=1000ملغ</div>
+      <div class="ex-wrap" id="ex-mass"></div>
+    </div>
+  </div>
+
+  <!-- VOLUME -->
+  <div id="tab-volume" class="content">
+    <div class="card">
+      <div class="card-header" style="background:linear-gradient(135deg,#6c3483,#9b59b6)"><h3>🪜 درج وحدات الحجم</h3></div>
+      <div class="stair-visual" id="stair-vol" style="background:linear-gradient(135deg,#f8f0ff,#f0e8ff)"></div>
+      <div class="stair-note">العامل دائماً 1000 بين كل وحدتين متجاورتين</div>
+    </div>
+    <div class="card">
+      <div class="card-header" style="background:linear-gradient(135deg,#1a3a8f,#2e7dd1)"><h3>🧮 الحاسبة الذكية</h3></div>
+      <div class="calc-wrap">
+        <div class="calc-row">
+          <input class="calc-input" type="number" id="vv" placeholder="القيمة" oninput="calcVol()">
+          <select class="calc-select" id="vf" onchange="calcVol()"><option value="m3">م³</option><option value="L" selected>لتر</option><option value="dL">ديسيلتر</option><option value="cL">سنتيلتر</option><option value="mL">مل</option></select>
+          <span class="arr">⇐</span>
+          <select class="calc-select" id="vt" onchange="calcVol()"><option value="m3">م³</option><option value="L">لتر</option><option value="dL">ديسيلتر</option><option value="cL">سنتيلتر</option><option value="mL" selected>مل</option></select>
+        </div>
+        <div class="calc-res" id="vol-res"><span class="calc-res-num" id="vr-n"></span><span class="calc-res-unit" id="vr-u"></span><div class="calc-steps" id="vr-s"></div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header" style="background:linear-gradient(135deg,#16a085,#1abc9c)"><h3>✏️ تمارين الحجم (عشوائية)</h3></div>
+      <div class="rule-box"><strong>العلاقات:</strong> 1م³=1000لتر | 1لتر=1000مل | 1لتر=1000سم³</div>
+      <div class="ex-wrap" id="ex-vol"></div>
+    </div>
+  </div>
+
+  <div class="score-strip">
+    <div style="display:flex;align-items:center;gap:10px">
+      <div class="sc-badge" id="sc-n">0</div>
+      <div>
+        <div style="color:#fff;font-size:.78rem;font-weight:700">نقاطك</div>
+        <div class="sc-bar-wrap"><div class="sc-bar" id="sc-b"></div></div>
+      </div>
+    </div>
+    <div style="color:rgba(255,255,255,.75);font-size:.78rem" id="sc-msg">أجب على التمارين!</div>
+    <button class="btn-sm" onclick="saveAndExit()">حفظ وخروج</button>
+  </div>
+</div>
+
+<!-- ══════════ SCREEN: DASHBOARD ══════════ -->
+<div id="screen-dash" class="screen">
+  <div class="hero">
+    <h1>📊 لوحة <span>المعلمة</span></h1>
+    <p>منى مصطفى — متابعة أداء الطلاب</p>
+  </div>
+  <div class="dash-wrap">
+    <div class="dash-header">
+      <h2>نتائج الطلاب</h2>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn-sm" onclick="clearAllData()">🗑 مسح الكل</button>
+        <button class="btn-sm" onclick="showScreen('screen-welcome')">← خروج</button>
+      </div>
+    </div>
+    <div class="stats-row" id="dash-stats"></div>
+    <div class="filter-row">
+      <label style="color:#fff;font-size:.85rem;font-weight:700">ترتيب حسب:</label>
+      <select id="sort-by" onchange="renderDash()">
+        <option value="score">الأعلى نقاطاً</option>
+        <option value="name">الاسم أ-ي</option>
+        <option value="time">آخر دخول</option>
+      </select>
+      <select id="filter-section" onchange="renderDash()">
+        <option value="all">جميع الأقسام</option>
+        <option value="length">الطول فقط</option>
+        <option value="mass">الكتلة فقط</option>
+        <option value="volume">الحجم فقط</option>
+      </select>
+    </div>
+    <div class="students-table">
+      <table class="tbl">
+        <thead><tr><th>#</th><th>الاسم</th><th>النقاط</th><th>الطول</th><th>الكتلة</th><th>الحجم</th><th>آخر دخول</th></tr></thead>
+        <tbody id="dash-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="notif" id="notif"></div>
+
+<script>
+// ══ TEACHER PASSWORD ══
+const TEACHER_PASS = 'mona2025';
+
+// ══ QUESTION BANKS ══
+const QB = {
+  length: [
+    {q:'3 كيلومتر = ؟ متر',a:3000,u:'م',hint:'3 × 1000 = 3000 م'},
+    {q:'250 سم = ؟ متر',a:2.5,u:'م',hint:'250 ÷ 100 = 2.5 م'},
+    {q:'5.5 م = ؟ سم',a:550,u:'سم',hint:'5.5 × 100 = 550 سم'},
+    {q:'35 مم = ؟ متر',a:0.035,u:'م',hint:'35 ÷ 1000 = 0.035 م'},
+    {q:'4.2 كم = ؟ سم',a:420000,u:'سم',hint:'4.2 × 1000 × 100 = 420,000'},
+    {q:'1500 م = ؟ كم',a:1.5,u:'كم',hint:'1500 ÷ 1000 = 1.5 كم'},
+    {q:'8 م = ؟ مم',a:8000,u:'مم',hint:'8 × 1000 = 8000 مم'},
+    {q:'200 مم = ؟ سم',a:20,u:'سم',hint:'200 ÷ 10 = 20 سم'},
+    {q:'0.5 كم = ؟ م',a:500,u:'م',hint:'0.5 × 1000 = 500 م'},
+    {q:'300 سم = ؟ م',a:3,u:'م',hint:'300 ÷ 100 = 3 م'},
+    {q:'2.4 م = ؟ دسم',a:24,u:'دسم',hint:'2.4 × 10 = 24 دسم'},
+    {q:'50 دسم = ؟ م',a:5,u:'م',hint:'50 ÷ 10 = 5 م'},
+    {q:'7 كم = ؟ م',a:7000,u:'م',hint:'7 × 1000 = 7000 م'},
+    {q:'6500 م = ؟ كم',a:6.5,u:'كم',hint:'6500 ÷ 1000 = 6.5 كم'},
+    {q:'45 مم = ؟ سم',a:4.5,u:'سم',hint:'45 ÷ 10 = 4.5 سم'},
+  ],
+  mass: [
+    {q:'3.5 كغ = ؟ غرام',a:3500,u:'غ',hint:'3.5 × 1000 = 3500 غ'},
+    {q:'2500 غ = ؟ كغ',a:2.5,u:'كغ',hint:'2500 ÷ 1000 = 2.5 كغ'},
+    {q:'0.75 طن = ؟ كغ',a:750,u:'كغ',hint:'0.75 × 1000 = 750 كغ'},
+    {q:'450 غ = ؟ كغ',a:0.45,u:'كغ',hint:'450 ÷ 1000 = 0.45 كغ'},
+    {q:'1.2 طن = ؟ غ',a:1200000,u:'غ',hint:'1.2 × 1000 × 1000 = 1,200,000'},
+    {q:'5000 غ = ؟ كغ',a:5,u:'كغ',hint:'5000 ÷ 1000 = 5 كغ'},
+    {q:'2 طن = ؟ كغ',a:2000,u:'كغ',hint:'2 × 1000 = 2000 كغ'},
+    {q:'800 ملغ = ؟ غ',a:0.8,u:'غ',hint:'800 ÷ 1000 = 0.8 غ'},
+    {q:'0.25 كغ = ؟ غ',a:250,u:'غ',hint:'0.25 × 1000 = 250 غ'},
+    {q:'3 غ = ؟ ملغ',a:3000,u:'ملغ',hint:'3 × 1000 = 3000 ملغ'},
+    {q:'1500 كغ = ؟ طن',a:1.5,u:'طن',hint:'1500 ÷ 1000 = 1.5 طن'},
+    {q:'6 كغ = ؟ غ',a:6000,u:'غ',hint:'6 × 1000 = 6000 غ'},
+    {q:'50 غ = ؟ ملغ',a:50000,u:'ملغ',hint:'50 × 1000 = 50,000 ملغ'},
+    {q:'0.5 طن = ؟ غ',a:500000,u:'غ',hint:'0.5 × 1000 × 1000 = 500,000'},
+    {q:'750 كغ = ؟ طن',a:0.75,u:'طن',hint:'750 ÷ 1000 = 0.75 طن'},
+  ],
+  volume: [
+    {q:'2 لتر = ؟ مليلتر',a:2000,u:'مل',hint:'2 × 1000 = 2000 مل'},
+    {q:'500 مل = ؟ لتر',a:0.5,u:'لتر',hint:'500 ÷ 1000 = 0.5 لتر'},
+    {q:'3 م³ = ؟ لتر',a:3000,u:'لتر',hint:'3 × 1000 = 3000 لتر'},
+    {q:'250 سم³ = ؟ لتر',a:0.25,u:'لتر',hint:'250 ÷ 1000 = 0.25 لتر'},
+    {q:'0.4 م³ = ؟ مل',a:400000,u:'مل',hint:'0.4 × 1000 × 1000 = 400,000'},
+    {q:'4000 مل = ؟ لتر',a:4,u:'لتر',hint:'4000 ÷ 1000 = 4 لتر'},
+    {q:'0.3 لتر = ؟ مل',a:300,u:'مل',hint:'0.3 × 1000 = 300 مل'},
+    {q:'5 م³ = ؟ لتر',a:5000,u:'لتر',hint:'5 × 1000 = 5000 لتر'},
+    {q:'750 مل = ؟ لتر',a:0.75,u:'لتر',hint:'750 ÷ 1000 = 0.75 لتر'},
+    {q:'1500 مل = ؟ لتر',a:1.5,u:'لتر',hint:'1500 ÷ 1000 = 1.5 لتر'},
+    {q:'2.5 لتر = ؟ سم³',a:2500,u:'سم³',hint:'2.5 × 1000 = 2500 سم³'},
+    {q:'0.002 م³ = ؟ مل',a:2000,u:'مل',hint:'0.002 × 1000 × 1000 = 2000'},
+    {q:'100 مل = ؟ ديسيلتر',a:1,u:'دل',hint:'100 ÷ 100 = 1 ديسيلتر'},
+    {q:'6 لتر = ؟ مل',a:6000,u:'مل',hint:'6 × 1000 = 6000 مل'},
+    {q:'2500 لتر = ؟ م³',a:2.5,u:'م³',hint:'2500 ÷ 1000 = 2.5 م³'},
+  ]
+};
+
+// ══ STATE ══
+let currentStudent = '';
+let score = 0, maxScore = 15;
+let sectionScores = {length:0, mass:0, volume:0};
+let sectionAttempts = {length:0, mass:0, volume:0};
+let sessionQuestions = {length:[], mass:[], volume:[]};
+
+// ══ HELPERS ══
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function showNotif(msg){
+  const n=document.getElementById('notif');
+  n.textContent=msg; n.classList.add('show');
+  setTimeout(()=>n.classList.remove('show'),2300);
+}
+
+function fmtNum(n){
+  if(Math.abs(n)>=1e6) return n.toLocaleString();
+  if(n!==0 && Math.abs(n)<0.0001) return n.toExponential(3);
+  return parseFloat(n.toPrecision(8)).toString();
+}
+
+function shuffle(arr){return [...arr].sort(()=>Math.random()-.5)}
+
+function pickQuestions(section, count=5){
+  return shuffle(QB[section]).slice(0,count);
+}
+
+// ══ STAIR VISUALS ══
+function buildStairs(){
+  const stairs = {
+    'stair-len': [
+      {label:'km كيلومتر', factor:'×1000 ↓ | ÷1000 ↑', bg:'rgba(29,184,170,.15)'},
+      {label:'m متر',       factor:'×10 ↓ | ÷10 ↑',    bg:'rgba(29,184,170,.22)'},
+      {label:'dm دسيمتر',   factor:'×10 ↓ | ÷10 ↑',    bg:'rgba(29,184,170,.30)'},
+      {label:'cm سنتيمتر',  factor:'×10 ↓ | ÷10 ↑',    bg:'rgba(29,184,170,.38)'},
+      {label:'mm مليمتر',   factor:'الأصغر',            bg:'rgba(29,184,170,.46)'},
+    ],
+    'stair-mass': [
+      {label:'ton طن',      factor:'×1000 ↓ | ÷1000 ↑', bg:'rgba(232,160,32,.2)'},
+      {label:'kg كيلوغرام', factor:'×1000 ↓ | ÷1000 ↑', bg:'rgba(232,160,32,.32)'},
+      {label:'gr غرام',     factor:'×1000 ↓ | ÷1000 ↑', bg:'rgba(232,160,32,.44)'},
+      {label:'mg ملليغرام', factor:'الأصغر',             bg:'rgba(232,160,32,.56)'},
+    ],
+    'stair-vol': [
+      {label:'m³ متر مكعب', factor:'×1000 ↓ | ÷1000 ↑', bg:'rgba(142,68,173,.15)'},
+      {label:'L لتر',       factor:'×1000 ↓ | ÷1000 ↑', bg:'rgba(142,68,173,.24)'},
+      {label:'dL ديسيلتر',  factor:'×1000 ↓ | ÷1000 ↑', bg:'rgba(142,68,173,.33)'},
+      {label:'cL سنتيلتر',  factor:'×1000 ↓ | ÷1000 ↑', bg:'rgba(142,68,173,.42)'},
+      {label:'mL مليلتر',   factor:'الأصغر',             bg:'rgba(142,68,173,.52)'},
+    ]
+  };
+  Object.entries(stairs).forEach(([id,steps])=>{
+    const el=document.getElementById(id); if(!el)return;
+    const total=steps.length;
+    el.innerHTML=steps.map((s,i)=>{
+      const w=55+i*(45/(total-1||1));
+      return `<div class="stair-step" style="width:${w}%;background:${s.bg};border-radius:${i===0?'10px 0 0 0':'4px 0 0 0'}">
+        <span style="font-family:'Cairo',sans-serif;font-weight:800;font-size:.88rem">${s.label}</span>
+        <span style="font-size:.72rem;color:#555;opacity:.9">${s.factor}</span>
+      </div>`;
+    }).join('');
+  });
+}
+
+// ══ BUILD EXERCISES ══
+function buildExercises(section){
+  const qs = pickQuestions(section, 5);
+  sessionQuestions[section] = qs;
+  const wrap = document.getElementById('ex-'+section);
+  wrap.innerHTML = qs.map((q,i)=>`
+    <div class="ex-row">
+      <div class="ex-q">${i+1}. ${q.q}</div>
+      <div class="ex-inputs">
+        <input class="ex-input" id="q${section}${i}" type="number" placeholder="...">
+        <span class="unit-tag">${q.u}</span>
+        <button class="check-btn" onclick="checkQ('${section}',${i})">تحقق ✓</button>
+      </div>
+      <div class="ex-result" id="r${section}${i}"></div>
+    </div>`).join('');
+}
+
+function checkQ(section, i){
+  const q = sessionQuestions[section][i];
+  const v = parseFloat(document.getElementById('q'+section+i).value);
+  const r = document.getElementById('r'+section+i);
+  if(isNaN(v)){r.className='ex-result no';r.textContent='أدخل قيمة أولاً';return;}
+  sectionAttempts[section]++;
+  if(Math.abs(v-q.a)<Math.abs(q.a)*0.001+0.0001){
+    r.className='ex-result ok';
+    r.textContent='✅ صحيح! '+q.hint;
+    score++; sectionScores[section]++;
+    updateScoreUI();
+    showNotif('✅ ممتاز! +1 نقطة');
+  } else {
+    r.className='ex-result no';
+    r.textContent='❌ خطأ — '+q.hint;
+    showNotif('❌ راجع الحساب');
+  }
+}
+
+function updateScoreUI(){
+  document.getElementById('sc-n').textContent=score;
+  document.getElementById('sc-b').style.width=Math.min(100,score/maxScore*100)+'%';
+  const msgs=['أجب على التمارين!','جيد، واصل!','رائع! تقدم ملحوظ 📈','ممتاز جداً! 🌟','نجم القياس! 🏆'];
+  document.getElementById('sc-msg').textContent=msgs[Math.min(4,Math.floor(score/maxScore*4))];
+}
+
+// ══ CALCULATORS ══
+const LM={km:1000,m:1,dm:0.1,cm:0.01,mm:0.001};
+const LN={km:'كم',m:'م',dm:'دسم',cm:'سم',mm:'مم'};
+const MM={ton:1000,kg:1,g:0.001,mg:0.000001};
+const MN={ton:'طن',kg:'كغ',g:'غ',mg:'ملغ'};
+const VM={m3:1000,L:1,dL:0.1,cL:0.01,mL:0.001};
+const VN={m3:'م³',L:'لتر',dL:'دل',cL:'سل',mL:'مل'};
+
+function buildCalcResult(v,fu,res,tu,factor,boxId,numId,unitId,stepsId){
+  const box=document.getElementById(boxId);
+  if(isNaN(v)){box.style.display='none';return;}
+  box.style.display='block';
+  document.getElementById(numId).textContent=fmtNum(res);
+  document.getElementById(unitId).textContent=tu;
+  const down=factor>1;
+  document.getElementById(stepsId).innerHTML=
+    `<strong>الخطوة:</strong> ${v} ${fu} ${down?'×':'÷'} ${fmtNum(down?factor:1/factor)} = <strong>${fmtNum(res)} ${tu}</strong><br>
+     ${down?'↘ تنزل درجة (كبير → صغير) → تضرب':'↗ تصعد درجة (صغير → كبير) → تقسم'}`;
+}
+function calcLen(){
+  const v=parseFloat(document.getElementById('lv').value),fr=document.getElementById('lf').value,to=document.getElementById('lt').value;
+  buildCalcResult(v,LN[fr],v*LM[fr]/LM[to],LN[to],LM[fr]/LM[to],'len-res','lr-n','lr-u','lr-s');
+}
+function calcMass(){
+  const v=parseFloat(document.getElementById('mv').value),fr=document.getElementById('mf').value,to=document.getElementById('mt').value;
+  buildCalcResult(v,MN[fr],v*MM[fr]/MM[to],MN[to],MM[fr]/MM[to],'mass-res','mr-n','mr-u','mr-s');
+}
+function calcVol(){
+  const v=parseFloat(document.getElementById('vv').value),fr=document.getElementById('vf').value,to=document.getElementById('vt').value;
+  buildCalcResult(v,VN[fr],v*VM[fr]/VM[to],VN[to],VM[fr]/VM[to],'vol-res','vr-n','vr-u','vr-s');
+}
+
+// ══ TABS ══
+function switchTab(t){
+  document.querySelectorAll('.tab').forEach((el,i)=>{
+    const m=['length','mass','volume'];
+    el.classList.toggle('active',m[i]===t);
+  });
+  document.querySelectorAll('.content').forEach(el=>el.classList.remove('active'));
+  document.getElementById('tab-'+t).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ══ STUDENT FLOW ══
+function startStudent(){
+  const name=document.getElementById('student-name').value.trim();
+  if(!name){showNotif('✏️ اكتب اسمك أولاً');return;}
+  currentStudent=name;
+  score=0; sectionScores={length:0,mass:0,volume:0}; sectionAttempts={length:0,mass:0,volume:0};
+  document.getElementById('student-greeting').textContent='أهلاً '+name+' 👋 — درّب نفسك وسجّل أعلى نقطة!';
+  buildStairs();
+  buildExercises('length');
+  buildExercises('mass');
+  buildExercises('volume');
+  updateScoreUI();
+  showScreen('screen-student');
+}
+
+function saveAndExit(){
+  if(!currentStudent) return;
+  const data = loadData();
+  const pct = Math.round(score/maxScore*100);
+  data[currentStudent]={
+    name:currentStudent,
+    score,maxScore,pct,
+    sectionScores:{...sectionScores},
+    sectionAttempts:{...sectionAttempts},
+    time:new Date().toLocaleString('ar-SA',{hour:'2-digit',minute:'2-digit',day:'2-digit',month:'2-digit'})
+  };
+  saveData(data);
+  showNotif('✅ تم حفظ نتيجتك: '+score+'/'+maxScore);
+  setTimeout(()=>showScreen('screen-welcome'),1500);
+}
+
+// ══ STORAGE ══
+function loadData(){
+  try{return JSON.parse(window.sessionStorage.getItem('unit_students')||'{}')}catch{return{}}
+}
+function saveData(d){
+  try{window.sessionStorage.setItem('unit_students',JSON.stringify(d))}catch{}
+}
+
+// ══ TEACHER FLOW ══
+function showTeacherLogin(){showScreen('screen-teacher-login');}
+function checkTeacherPass(){
+  if(document.getElementById('teacher-pass').value===TEACHER_PASS){
+    document.getElementById('teacher-pass').value='';
+    renderDash();
+    showScreen('screen-dash');
+  } else {
+    showNotif('❌ كلمة السر غير صحيحة');
+  }
+}
+
+function renderDash(){
+  const data=loadData();
+  const students=Object.values(data);
+  const sortBy=document.getElementById('sort-by').value;
+  const filterSec=document.getElementById('filter-section').value;
+
+  // stats
+  const total=students.length;
+  const avgScore=total?Math.round(students.reduce((s,x)=>s+x.pct,0)/total):0;
+  const top=total?students.reduce((a,b)=>a.score>b.score?a:b,students[0]):null;
+  document.getElementById('dash-stats').innerHTML=`
+    <div class="stat-box"><div class="stat-num">${total}</div><div class="stat-label">إجمالي الطلاب</div></div>
+    <div class="stat-box"><div class="stat-num">${avgScore}%</div><div class="stat-label">متوسط النقاط</div></div>
+    <div class="stat-box"><div class="stat-num">${top?top.name.split(' ')[0]:'—'}</div><div class="stat-label">الأول 🏆</div></div>`;
+
+  // sort
+  const sorted=[...students].sort((a,b)=>{
+    if(sortBy==='score') return b.score-a.score;
+    if(sortBy==='name')  return a.name.localeCompare(b.name,'ar');
+    return 0;
+  });
+
+  const tbody=document.getElementById('dash-tbody');
+  if(!sorted.length){
+    tbody.innerHTML='<tr><td colspan="7" class="no-data">لا يوجد طلاب بعد — انتظر أن يُكملوا التمارين ويضغطوا "حفظ وخروج"</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML=sorted.map((s,i)=>{
+    const rank=i+1;
+    const rClass=rank===1?'rank-1':rank===2?'rank-2':rank===3?'rank-3':'rank-n';
+    const lenSc=s.sectionScores?.length||0;
+    const massSc=s.sectionScores?.mass||0;
+    const volSc=s.sectionScores?.volume||0;
+    const tag=(sc,max)=>sc>=max*0.8?`<span class="strong-tag">${sc}/5 ✓</span>`
+                          :sc<=max*0.4?`<span class="weak-tag">${sc}/5 ✗</span>`
+                          :`<span style="font-size:.82rem">${sc}/5</span>`;
+    return `<tr>
+      <td><span class="rank-badge ${rClass}">${rank}</span></td>
+      <td style="font-weight:700;text-align:right">${s.name}</td>
+      <td><span class="score-pill">${s.score}/${s.maxScore} (${s.pct}%)</span></td>
+      <td>${tag(lenSc,5)}</td>
+      <td>${tag(massSc,5)}</td>
+      <td>${tag(volSc,5)}</td>
+      <td style="font-size:.78rem;color:#888">${s.time||'—'}</td>
+    </tr>`;
+  }).join('');
+}
+
+function clearAllData(){
+  if(confirm('هل تريدين مسح بيانات جميع الطلاب؟')){
+    try{window.sessionStorage.removeItem('unit_students')}catch{}
+    renderDash();
+    showNotif('🗑 تم المسح');
+  }
+}
+</script>
